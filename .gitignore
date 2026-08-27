@@ -1,0 +1,39 @@
+# Environment & keys
+.env
+.env.local
+*.json
+!package.json
+!package-lock.json
+!vercel.json
+lazy-job-seeker-*.json
+
+# Dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+
+# Vercel
+.vercel/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Distribution and build files
+dist/
+dist-electron/
+release/
+build-electron/
+*.exe
+*.dmg
+*.zip
+*.app
+*.blockmap
+out/
+bin/
+
+# Logs
+*.log

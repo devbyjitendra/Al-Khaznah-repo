@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Decoy Cursor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        /* Pixel-perfect realistic OS mouse cursor */
+        .cursor-svg {
+            width: 24px;
+            height: 24px;
+            filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.45));
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <svg class="cursor-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 2L4 20L8.5 15.5L12.5 23L15.5 21.5L11.5 14L17 14L4 2Z" fill="white" stroke="#111827" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+</body>
+</html>

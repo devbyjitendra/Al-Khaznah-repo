@@ -1,0 +1,16 @@
+{
+  "name": "al-khaznah-ai-assistant",
+  "version": "1.0.0",
+  "description": "AI-powered Meeting & Interview Assistant providing real-time streaming answers",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node -e \"import('http').then(http => http.createServer(async (req,res) => { const fs = await import('fs'); if(req.url.startsWith('/api/chat')) { const h = (await import('./api/chat.js')).default; let b=''; req.on('data', c=>b+=c); req.on('end', ()=>{ req.body=JSON.parse(b||'{}'); h(req,res); }); } else if(req.url.startsWith('/api/voice')) { const h = (await import('./api/voice.js')).default; let b=''; req.on('data', c=>b+=c); req.on('end', ()=>{ req.body=JSON.parse(b||'{}'); h(req,res); }); } else { const p = req.url === '/' ? '/index.html' : req.url; try { const f = fs.readFileSync('.' + p); const ct = p.endsWith('.png') ? 'image/png' : p.endsWith('.js') ? 'text/javascript' : p.endsWith('.css') ? 'text/css' : 'text/html'; res.writeHead(200, {'Content-Type': ct}); res.end(f); } catch(e){ res.writeHead(404); res.end('Not Found'); } } }).listen(3000, () => console.log('Local dev running at http://localhost:3000')))\"",
+    "start": "node -e \"import('http').then(http => http.createServer(async (req,res) => { const fs = await import('fs'); if(req.url.startsWith('/api/chat')) { const h = (await import('./api/chat.js')).default; let b=''; req.on('data', c=>b+=c); req.on('end', ()=>{ req.body=JSON.parse(b||'{}'); h(req,res); }); } else if(req.url.startsWith('/api/voice')) { const h = (await import('./api/voice.js')).default; let b=''; req.on('data', c=>b+=c); req.on('end', ()=>{ req.body=JSON.parse(b||'{}'); h(req,res); }); } else { const p = req.url === '/' ? '/index.html' : req.url; try { const f = fs.readFileSync('.' + p); const ct = p.endsWith('.png') ? 'image/png' : p.endsWith('.js') ? 'text/javascript' : p.endsWith('.css') ? 'text/css' : 'text/html'; res.writeHead(200, {'Content-Type': ct}); res.end(f); } catch(e){ res.writeHead(404); res.end('Not Found'); } } }).listen(process.env.PORT || 3000, () => console.log('Web server running on port ' + (process.env.PORT || 3000))))\""
+  },
+  "author": "Al Khaznah",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^17.4.2"
+  }
+}
