@@ -47,8 +47,8 @@ export default async function handler(req, res) {
       return sendEnd();
     }
 
-    const preferredModel = userConfig?.geminiModel || 'gemini-1.5-flash';
-    const modelsToTry = [preferredModel, 'gemini-1.5-flash', 'gemini-1.5-flash-latest', 'gemini-1.5-pro', 'gemini-2.0-flash'];
+    const preferredModel = userConfig?.geminiModel || 'gemini-3.6-flash';
+    const modelsToTry = [preferredModel, 'gemini-3.6-flash', 'gemini-3.7-flash', 'gemini-flash-latest', 'gemini-3.5-flash-lite', 'gemini-pro-latest'];
     const uniqueModels = [...new Set(modelsToTry)];
 
     let success = false;
