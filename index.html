@@ -807,14 +807,20 @@
         function loadConfig() {
             try {
                 const saved = localStorage.getItem(CONFIG_KEY);
-                if (saved) return JSON.parse(saved);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (!parsed.geminiModel || parsed.geminiModel.includes('1.5') || parsed.geminiModel.includes('2.0') || parsed.geminiModel.includes('2.5')) {
+                        parsed.geminiModel = 'gemini-3.6-flash';
+                    }
+                    return parsed;
+                }
             } catch (e) {}
             return {
                 provider: 'gemini',
                 openaiApiKey: '',
                 openaiModel: 'gpt-4o-mini',
                 geminiApiKey: '',
-                geminiModel: 'gemini-2.5-flash'
+                geminiModel: 'gemini-3.6-flash'
             };
         }
 
@@ -826,7 +832,7 @@
             openaiApiKeyInput.value = config.openaiApiKey || '';
             openaiModelSelect.value = config.openaiModel || 'gpt-4o-mini';
             geminiApiKeyInput.value = config.geminiApiKey || '';
-            geminiModelSelect.value = config.geminiModel || 'gemini-2.5-flash';
+            geminiModelSelect.value = config.geminiModel || 'gemini-3.6-flash';
             updateProviderVisibility();
         }
 
