@@ -47,11 +47,12 @@ export default async function handler(req, res) {
       return sendEnd();
     }
 
-    const preferredModel = userConfig?.geminiModel || 'gemini-2.5-flash';
-    const modelsToTry = [preferredModel, 'gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+    const preferredModel = userConfig?.geminiModel || 'gemini-1.5-flash';
+    const modelsToTry = [preferredModel, 'gemini-1.5-flash', 'gemini-1.5-flash-latest', 'gemini-1.5-pro', 'gemini-2.0-flash'];
     const uniqueModels = [...new Set(modelsToTry)];
 
     let success = false;
+    let lastErrorMessage = '';
     for (const m of uniqueModels) {
       try {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/${m}:streamGenerateContent?alt=sse&key=${geminiApiKey}`;
@@ -79,6 +80,12 @@ export default async function handler(req, res) {
         if (!response.ok) {
           const errText = await response.text();
           console.warn(`Model ${m} failed:`, errText);
+          try {
+            const errObj = JSON.parse(errText);
+            lastErrorMessage = errObj.error?.message || errText;
+          } catch(e) {
+            lastErrorMessage = errText;
+          }
           continue;
         }
 
@@ -112,12 +119,13 @@ export default async function handler(req, res) {
         success = true;
         break;
       } catch (err) {
+        lastErrorMessage = err.message;
         console.warn(`Attempt with ${m} failed:`, err.message);
       }
     }
 
     if (!success) {
-      sendChunk('Failed to generate response with Gemini. Please check your API key or network connection.');
+      sendChunk(`Gemini Error: ${lastErrorMessage || 'Failed to connect. Please check your Gemini API key or quota in Settings ⚙.'}`);
     }
     return sendEnd();
   }
